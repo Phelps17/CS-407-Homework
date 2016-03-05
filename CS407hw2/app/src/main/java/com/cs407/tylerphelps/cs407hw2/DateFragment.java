@@ -33,7 +33,6 @@ public class DateFragment extends Fragment {
 
     private Button addEventButton;
     private Button deleteEventButton;
-    private Event selectedEvent;
 
     public DateFragment() {
         // Required empty public constructor
