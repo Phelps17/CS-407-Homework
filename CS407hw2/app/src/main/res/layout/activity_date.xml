@@ -9,4 +9,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.cs407.tylerphelps.cs407hw2.DateActivity">
 
+    <FrameLayout
+        android:id="@+id/date_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
+
 </RelativeLayout>

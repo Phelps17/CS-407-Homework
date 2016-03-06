@@ -29,9 +29,9 @@ public class ExampleDaoGenerator {
         Calevent.addBooleanProperty("display");
 
         //Dates
-        Entity Caldate = schema.addEntity("Date");
+        Entity Caldate = schema.addEntity("CalDate");
         Caldate.addIdProperty();
-        Caldate.addStringProperty("month");
+        Caldate.addIntProperty("month");
         Caldate.addIntProperty("day");
         Caldate.addIntProperty("year");
         //need to add relationship to events
