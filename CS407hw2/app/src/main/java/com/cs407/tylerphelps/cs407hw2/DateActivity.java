@@ -22,7 +22,7 @@ public class DateActivity extends AppCompatActivity {
 
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.date_fragment_container, DateFragment.newInstance(null, null))
+                .replace(R.id.date_fragment_container, DateFragment.newInstance(null, null)) //month, day, year))
                 .addToBackStack(null)
                 .commit();
     }

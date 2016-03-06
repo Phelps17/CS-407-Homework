@@ -3,12 +3,16 @@ package com.cs407.tylerphelps.cs407hw2;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.TextView;
-import android.app.Fragment;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 /**
@@ -20,12 +24,9 @@ import android.app.Fragment;
  * create an instance of this fragment.
  */
 public class DateFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -33,6 +34,13 @@ public class DateFragment extends Fragment {
 
     private Button addEventButton;
     private Button deleteEventButton;
+    private ListView listView;
+
+    private int tempCounter;
+
+    ArrayAdapter adapter;
+
+    private ArrayList<String> eventList;
 
     public DateFragment() {
         // Required empty public constructor
@@ -63,69 +71,52 @@ public class DateFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        eventList = new ArrayList<>();
+        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, eventList);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = null;
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_date, container, false);
+        view = inflater.inflate(R.layout.fragment_date, container, false);
 
-        /*instantiate widgets
-        addEventButton = (Button) view.findViewById(R.id.rock);
-        deleteEventButton = (Button) view.findViewById(R.id.paper);
-        headerTextView = (TextView) view.findViewById(R.id.header);*/
+        //instantiate widgets
+        addEventButton = (Button) view.findViewById(R.id.addEventBtn);
+        deleteEventButton = (Button) view.findViewById(R.id.deleteEventBtn);
+        listView = (ListView) view.findViewById(R.id.listView);
+        listView.setAdapter(adapter);
 
+        adapter.notifyDataSetChanged();
+
+        return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        /*different way of implementing click interaction.
-        rockButton.setOnClickListener(new View.OnClickListener() {
+        this.tempCounter = 0;
+
+        addEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(player1Choice == null){
-                    System.out.println("HERE!");
-
-                    getFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.main_fragment_container, PlayFragment.newInstance("Rock",null))
-                            .addToBackStack(null)
-                            .commit();
-
-
-                    System.out.println("NOW HERE!");
-                }
-                else{
-                    player2Choice = "Rock";
-                    displayWinner("Tyler");
-                }
-
+                eventList.add("Event " + tempCounter);
+                tempCounter++;
+                adapter.notifyDataSetChanged();
             }
         });
 
-        paperButton.setOnClickListener(new View.OnClickListener() {
+        deleteEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(player1Choice == null) {
-                    getFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.main_fragment_container, PlayFragment.newInstance("Paper",null))
-                            .addToBackStack(null)
-                            .commit();
-
-                }
-                else{
-                    player2Choice = "Paper";
-                    displayWinner("Tyler");
-
-                }
+                Toast.makeText(getActivity(), "Deleted Event", Toast.LENGTH_LONG).show();
             }
-        });*/
+        });
+
     }
 
     @Override
