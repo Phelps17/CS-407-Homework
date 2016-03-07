@@ -5,8 +5,6 @@
     android:orientation="vertical"
     tools:context="com.cs407.tylerphelps.cs407hw2.DateFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -26,6 +24,13 @@
             android:text="Delete Event"
             android:id="@+id/deleteEventBtn" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Saved Events:"
+        android:id="@+id/textView" />
 
     <ListView
         android:layout_width="match_parent"

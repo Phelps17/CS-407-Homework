@@ -27,7 +27,7 @@ public class DateFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private String dateString;
+    private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
@@ -37,7 +37,6 @@ public class DateFragment extends Fragment {
     private ListView listView;
 
     ArrayAdapter adapter;
-
     private ArrayList<String> eventList;
 
     public DateFragment() {
@@ -52,7 +51,6 @@ public class DateFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment DateFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static DateFragment newInstance(String param1, String param2) {
         DateFragment fragment = new DateFragment();
         Bundle args = new Bundle();
@@ -66,13 +64,12 @@ public class DateFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            dateString = getArguments().getString(ARG_PARAM1);
+            mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
         eventList = new ArrayList<>();
         adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, eventList);
-
     }
 
     @Override
@@ -86,8 +83,12 @@ public class DateFragment extends Fragment {
         addEventButton = (Button) view.findViewById(R.id.addEventBtn);
         deleteEventButton = (Button) view.findViewById(R.id.deleteEventBtn);
         listView = (ListView) view.findViewById(R.id.listView);
-        listView.setAdapter(adapter);
 
+        eventList = ((DateActivity)getActivity()).getEventList();
+
+        //TODO get listview to display shit
+        //todo delete stuff
+        listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
         return view;
@@ -100,8 +101,6 @@ public class DateFragment extends Fragment {
         addEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                eventList.add("Event on " + dateString);
-
                 getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.date_fragment_container, AddEventFragment.newInstance(null, null))

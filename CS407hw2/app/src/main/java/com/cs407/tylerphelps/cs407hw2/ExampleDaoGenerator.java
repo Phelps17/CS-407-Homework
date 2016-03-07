@@ -23,8 +23,9 @@ public class ExampleDaoGenerator {
         Calevent.addIdProperty();
         Calevent.addStringProperty("name");
         Calevent.addStringProperty("location");
-        Calevent.addIntProperty("startTime");
-        Calevent.addIntProperty("endTime");
+        Calevent.addStringProperty("startTime");
+        Calevent.addStringProperty("endTime");
+        Calevent.addLongProperty("dateID");
         //need to add relationship to events
         Calevent.addBooleanProperty("display");
 

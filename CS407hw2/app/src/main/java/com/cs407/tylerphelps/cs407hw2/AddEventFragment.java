@@ -7,6 +7,10 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
+import java.util.Date;
 
 
 /**
@@ -18,16 +22,16 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class AddEventFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private Button addEventButton, cancelButton;
+    private EditText nameBox, locationBox, startTimeBox, endTimeBox;
 
     public AddEventFragment() {
         // Required empty public constructor
@@ -63,28 +67,41 @@ public class AddEventFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = null;
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_event, container, false);
+        view = inflater.inflate(R.layout.fragment_add_event, container, false);
+
+        addEventButton = (Button) view.findViewById(R.id.addEventBtn);
+        cancelButton = (Button) view.findViewById(R.id.cancelBtn);
+        nameBox = (EditText) view.findViewById(R.id.inputEventName);
+        locationBox = (EditText) view.findViewById(R.id.inputLocation);
+        startTimeBox = (EditText) view.findViewById(R.id.inputStartTime);
+        endTimeBox = (EditText) view.findViewById(R.id.inputEndTime);
+
+        return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        /*
         addEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //add the event
+                ((DateActivity)getActivity()).newEvent(nameBox.getText().toString(),
+                        locationBox.getText().toString(), startTimeBox.getText().toString(),
+                        endTimeBox.getText().toString());
+
+                getFragmentManager().popBackStack();
             }
         });
 
-        deleteEventButton.setOnClickListener(new View.OnClickListener() {
+        cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //cancel the event
+                getFragmentManager().popBackStack();
             }
-        });*/
+        });
 
     }
 

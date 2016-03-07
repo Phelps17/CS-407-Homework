@@ -9,8 +9,9 @@ public class Event {
     private Long id;
     private String name;
     private String location;
-    private Integer startTime;
-    private Integer endTime;
+    private String startTime;
+    private String endTime;
+    private Long dateID;
     private Boolean display;
 
     public Event() {
@@ -20,12 +21,13 @@ public class Event {
         this.id = id;
     }
 
-    public Event(Long id, String name, String location, Integer startTime, Integer endTime, Boolean display) {
+    public Event(Long id, String name, String location, String startTime, String endTime, Long dateID, Boolean display) {
         this.id = id;
         this.name = name;
         this.location = location;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.dateID = dateID;
         this.display = display;
     }
 
@@ -53,20 +55,28 @@ public class Event {
         this.location = location;
     }
 
-    public Integer getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Integer startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Integer getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Integer endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public Long getDateID() {
+        return dateID;
+    }
+
+    public void setDateID(Long dateID) {
+        this.dateID = dateID;
     }
 
     public Boolean getDisplay() {

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.CalendarView.OnDateChangeListener;
 import android.widget.Toast;
@@ -74,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (selectedDate == null) {
                     newDate(month, dayOfMonth, year);
+                    selectedDate = containsDate(month, dayOfMonth, year);
                 }
 
                 Intent date = new Intent(context, DateActivity.class);
@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 date.putExtra("month", month);
                 date.putExtra("day", dayOfMonth);
                 date.putExtra("year", year);
+                date.putExtra("dateId", selectedDate.getId());
 
                 startActivity(date);
             }
