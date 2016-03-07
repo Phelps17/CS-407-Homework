@@ -72,21 +72,17 @@ public class MainActivity extends AppCompatActivity {
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 CalDate selectedDate = containsDate(month, dayOfMonth, year);
 
-                if (selectedDate != null) {
-                    Toast.makeText(getApplicationContext(), "In DB", Toast.LENGTH_LONG).show();
-
-                    Intent date = new Intent(context, DateActivity.class);
-
-                    date.putExtra("month", month);
-                    date.putExtra("day", dayOfMonth);
-                    date.putExtra("year", year);
-
-                    startActivity(date);
-                }
-                else {
+                if (selectedDate == null) {
                     newDate(month, dayOfMonth, year);
-                    Toast.makeText(getApplicationContext(), "Added to DB", Toast.LENGTH_LONG).show();
                 }
+
+                Intent date = new Intent(context, DateActivity.class);
+
+                date.putExtra("month", month);
+                date.putExtra("day", dayOfMonth);
+                date.putExtra("year", year);
+
+                startActivity(date);
             }
         });
     }

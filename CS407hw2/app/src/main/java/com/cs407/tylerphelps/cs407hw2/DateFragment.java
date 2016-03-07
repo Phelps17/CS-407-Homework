@@ -27,7 +27,7 @@ public class DateFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private String mParam1;
+    private String dateString;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
@@ -35,8 +35,6 @@ public class DateFragment extends Fragment {
     private Button addEventButton;
     private Button deleteEventButton;
     private ListView listView;
-
-    private int tempCounter;
 
     ArrayAdapter adapter;
 
@@ -68,7 +66,7 @@ public class DateFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            dateString = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
@@ -99,13 +97,17 @@ public class DateFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        this.tempCounter = 0;
-
         addEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                eventList.add("Event " + tempCounter);
-                tempCounter++;
+                eventList.add("Event on " + dateString);
+
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.date_fragment_container, AddEventFragment.newInstance(null, null))
+                        .addToBackStack(null)
+                        .commit();
+
                 adapter.notifyDataSetChanged();
             }
         });
@@ -113,7 +115,7 @@ public class DateFragment extends Fragment {
         deleteEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Deleted Event", Toast.LENGTH_LONG).show();
+
             }
         });
 
