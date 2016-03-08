@@ -19,24 +19,14 @@ public class ExampleDaoGenerator {
     private static void createDB(Schema schema) {
 
         //Events
-        Entity Calevent = schema.addEntity("Event");
+        Entity Calevent = schema.addEntity("CalEvent");
         Calevent.addIdProperty();
         Calevent.addStringProperty("name");
         Calevent.addStringProperty("location");
         Calevent.addStringProperty("startTime");
         Calevent.addStringProperty("endTime");
-        Calevent.addLongProperty("dateID");
-        //need to add relationship to events
+        Calevent.addStringProperty("date");
         Calevent.addBooleanProperty("display");
-
-        //Dates
-        Entity Caldate = schema.addEntity("CalDate");
-        Caldate.addIdProperty();
-        Caldate.addIntProperty("month");
-        Caldate.addIntProperty("day");
-        Caldate.addIntProperty("year");
-        //need to add relationship to events
-        Caldate.addBooleanProperty("display");
 
     }
 

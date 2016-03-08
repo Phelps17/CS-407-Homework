@@ -35,8 +35,8 @@ public class DateFragment extends Fragment {
     private Button addEventButton;
     private Button deleteEventButton;
     private ListView listView;
-
     ArrayAdapter adapter;
+
     private ArrayList<String> eventList;
 
     public DateFragment() {
@@ -68,8 +68,8 @@ public class DateFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        eventList = new ArrayList<>();
-        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, eventList);
+        eventList = ((DateActivity)getActivity()).getEventList();
+        adapter = new ArrayAdapter<>(((DateActivity) getActivity()).context, android.R.layout.simple_list_item_1, eventList);
     }
 
     @Override
@@ -84,10 +84,6 @@ public class DateFragment extends Fragment {
         deleteEventButton = (Button) view.findViewById(R.id.deleteEventBtn);
         listView = (ListView) view.findViewById(R.id.listView);
 
-        eventList = ((DateActivity)getActivity()).getEventList();
-
-        //TODO get listview to display shit
-        //todo delete stuff
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -114,7 +110,7 @@ public class DateFragment extends Fragment {
         deleteEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //todo delete stuff
             }
         });
 

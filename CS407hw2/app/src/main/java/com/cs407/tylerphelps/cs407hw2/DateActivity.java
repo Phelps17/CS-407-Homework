@@ -12,38 +12,39 @@ import android.widget.Toast;
 
 public class DateActivity extends AppCompatActivity {
 
-    //TODO access database of events
     Context context;
 
-    /*
-    DaoMaster.DevOpenHelper calendarDBHelper;
-    SQLiteDatabase calendarDB;
+    private ArrayList<String> eventList;
+
+    DaoMaster.DevOpenHelper eventDBHelper;
+    SQLiteDatabase eventDB;
     DaoMaster daoMaster;
     DaoSession daoSession;
+    CalEventDao eventDao;
+    List<CalEvent> eventListFromDB;
 
-    EventDao eventDao;*/
-    List<Event> eventsOnDate;
 
-    private long dateId;
     private int month, day, year;
+    String dateString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date);
 
+        context = this;
+        eventList = new ArrayList<>();
+
         Intent intent = getIntent();
 
         this.month = intent.getIntExtra("month", 0);
         this.day = intent.getIntExtra("day", 0);
         this.year = intent.getIntExtra("year", 0);
-        this.dateId = intent.getLongExtra("dateId", 0);
+        this.dateString = (month+ 1) + "/" + day + "/" + year;
 
-        context = this;
-        //initDatabase();
-        this.eventsOnDate = new ArrayList<>();
+        initDatabase();
 
-        setTitle((month+ 1) + "/" + day + "/" + year);
+        setTitle(dateString);
 
         getFragmentManager()
                 .beginTransaction()
@@ -52,81 +53,81 @@ public class DateActivity extends AppCompatActivity {
                 .commit();
     }
 
-    /*
     private void initDatabase() {
-        calendarDBHelper = new DaoMaster.DevOpenHelper(this, "ORM.sqlite", null);
-        calendarDB = calendarDBHelper.getWritableDatabase();
+        eventDBHelper = new DaoMaster.DevOpenHelper(this, "ORM.sqlite", null);
+        eventDB = eventDBHelper.getWritableDatabase();
 
         //Get DaoMaster
-        daoMaster = new DaoMaster(calendarDB);
+        daoMaster = new DaoMaster(eventDB);
 
         //Use methods in DaoMaster to create initial database table
-        daoMaster.createAllTables(calendarDB, true);
+        daoMaster.createAllTables(eventDB, true);
 
         //Use method in DaoMaster to create a database access session
         daoSession = daoMaster.newSession();
 
-        eventDao = daoSession.getEventDao();
+        eventDao = daoSession.getCalEventDao();
 
         if (eventDao.queryBuilder().where(
-                EventDao.Properties.Display.eq(true)).list() == null)
+                CalEventDao.Properties.Display.eq(true)).list() == null)
         {
             closeReopenDatabase();
         }
+        eventListFromDB = eventDao.queryBuilder().where(
+                CalEventDao.Properties.Display.eq(true)).list();
 
-        eventsOnDate = eventDao.queryBuilder().where(EventDao.Properties.Display.eq(true)).list();
+        if (eventListFromDB != null) {
+
+            for (CalEvent event : eventListFromDB)
+            {
+                if (event == null)
+                {
+                    return;
+                }
+                Toast.makeText(context, "Added Events from Database", Toast.LENGTH_SHORT).show();
+                eventList.add(event.getName() + " @ " + event.getLocation());
+            }
+        }
     }
 
     private void closeDatabase()
     {
         daoSession.clear();
-        calendarDB.close();
-        calendarDBHelper.close();
+        eventDB.close();
+        eventDBHelper.close();
     }
 
     private void closeReopenDatabase()
     {
         closeDatabase();
 
-        calendarDBHelper = new DaoMaster.DevOpenHelper(this, "ORM.sqlite", null);
-        calendarDB = calendarDBHelper.getWritableDatabase();
+        eventDBHelper = new DaoMaster.DevOpenHelper(this, "ORM.sqlite", null);
+        eventDB = eventDBHelper.getWritableDatabase();
 
         //Get DaoMaster
-        daoMaster = new DaoMaster(calendarDB);
+        daoMaster = new DaoMaster(eventDB);
 
         //Use method in DaoMaster to create a database access session
         daoSession = daoMaster.newSession();
 
-        eventDao = daoSession.getEventDao();
+        eventDao = daoSession.getCalEventDao();
 
-    }*/
+    }
 
     public ArrayList getEventList() {
-        ArrayList<String> eventStrings = new ArrayList();
-
-        for (Event event : eventsOnDate) {
-            String eventString = event.getName();
-            eventStrings.add(eventString);
-        }
-
-        return eventStrings;
+        return eventList;
     }
 
     public void newEvent(String name, String location, String startTime, String endTime) {
         Random rand = new Random();
 
-        Event newEvent = new Event((Long) rand.nextLong(), name, location, startTime, endTime, (Long) this.dateId, true);
+        CalEvent newEvent = new CalEvent(rand.nextLong(), name, location, startTime, endTime, this.dateString, true);
 
-        /*
         eventDao.insert(newEvent);
 
         //Close and reopen database to ensure Guest object is saved
         closeReopenDatabase();
 
-        eventsOnDate = eventDao.queryBuilder().where(EventDao.Properties.Display.eq(true)).list();*/
-
         Toast.makeText(this, "New Event Added!", Toast.LENGTH_LONG).show();
-        eventsOnDate.add(newEvent);
     }
-
 }
