@@ -117,7 +117,7 @@ public class DateFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (selectedIndex != -1) {
-                    eventList.remove(selectedIndex);
+                    ((DateActivity) getActivity()).deleteEvent(selectedIndex);
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -127,6 +127,7 @@ public class DateFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectedIndex = position;
+                //TODO NEED TO HIGHLIGHT
             }
         });
     }

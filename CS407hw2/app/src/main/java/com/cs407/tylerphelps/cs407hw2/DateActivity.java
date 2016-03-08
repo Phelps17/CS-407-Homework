@@ -132,4 +132,20 @@ public class DateActivity extends AppCompatActivity {
 
         Toast.makeText(this, "New Event Added!", Toast.LENGTH_LONG).show();
     }
+
+    public void deleteEvent(int index) {
+        String stringToDelete = eventList.get(index);
+
+        for (CalEvent event : eventListFromDB)
+        {
+            String curString = event.getName() + " @ " + event.getLocation();
+            if (curString.equals(stringToDelete)) {
+                //todo DELETE THAT SHIT
+                eventDao.delete(event);
+                Toast.makeText(this, "Deleting!", Toast.LENGTH_LONG).show();
+                eventList.remove(index);
+                return;
+            }
+        }
+    }
 }
