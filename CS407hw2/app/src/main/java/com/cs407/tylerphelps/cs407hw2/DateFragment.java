@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -38,6 +39,7 @@ public class DateFragment extends Fragment {
     ArrayAdapter adapter;
 
     private ArrayList<String> eventList;
+    private int selectedIndex;
 
     public DateFragment() {
         // Required empty public constructor
@@ -68,6 +70,7 @@ public class DateFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        selectedIndex = -1;
         eventList = ((DateActivity)getActivity()).getEventList();
         adapter = new ArrayAdapter<>(((DateActivity) getActivity()).context, android.R.layout.simple_list_item_1, eventList);
     }
@@ -83,6 +86,8 @@ public class DateFragment extends Fragment {
         addEventButton = (Button) view.findViewById(R.id.addEventBtn);
         deleteEventButton = (Button) view.findViewById(R.id.deleteEventBtn);
         listView = (ListView) view.findViewById(R.id.listView);
+
+        listView.setChoiceMode(1);
 
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -103,7 +108,7 @@ public class DateFragment extends Fragment {
                         .addToBackStack(null)
                         .commit();
 
-                eventList = ((DateActivity)getActivity()).getEventList();
+                eventList = ((DateActivity) getActivity()).getEventList();
                 adapter.notifyDataSetChanged();
             }
         });
@@ -111,10 +116,19 @@ public class DateFragment extends Fragment {
         deleteEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo delete stuff
+                if (selectedIndex != -1) {
+                    eventList.remove(selectedIndex);
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedIndex = position;
+            }
+        });
     }
 
     @Override
@@ -145,7 +159,6 @@ public class DateFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }
