@@ -85,7 +85,8 @@ public class DateActivity extends AppCompatActivity {
                     return;
                 }
                 if (event.getDate().equals(this.dateString)) {
-                    eventList.add(event.getName() + " @ " + event.getLocation());
+                    eventList.add(event.getName() + " @ " + event.getLocation()
+                            + "\n" + event.getStartTime() + " - " + event.getEndTime());
                 }
             }
         }
@@ -125,7 +126,8 @@ public class DateActivity extends AppCompatActivity {
         CalEvent newEvent = new CalEvent(rand.nextLong(), name, location, startTime, endTime, this.dateString, true);
 
         eventDao.insert(newEvent);
-        eventList.add(newEvent.getName() + " @ " + newEvent.getLocation());
+        eventList.add(newEvent.getName() + " @ " + newEvent.getLocation()
+                + "\n" + newEvent.getStartTime() + " - " + newEvent.getEndTime());
 
         //Close and reopen database to ensure Guest object is saved
         closeReopenDatabase();
@@ -138,7 +140,9 @@ public class DateActivity extends AppCompatActivity {
 
         for (CalEvent event : eventListFromDB)
         {
-            String curString = event.getName() + " @ " + event.getLocation();
+            String curString = event.getName() + " @ " + event.getLocation()
+                    + "\n" + event.getStartTime() + " - " + event.getEndTime();
+
             if (curString.equals(stringToDelete)) {
                 //todo DELETE THAT SHIT
                 eventDao.delete(event);

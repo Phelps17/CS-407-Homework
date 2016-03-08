@@ -87,8 +87,6 @@ public class DateFragment extends Fragment {
         deleteEventButton = (Button) view.findViewById(R.id.deleteEventBtn);
         listView = (ListView) view.findViewById(R.id.listView);
 
-        listView.setChoiceMode(1);
-
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -127,7 +125,6 @@ public class DateFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectedIndex = position;
-                //TODO NEED TO HIGHLIGHT
             }
         });
     }
