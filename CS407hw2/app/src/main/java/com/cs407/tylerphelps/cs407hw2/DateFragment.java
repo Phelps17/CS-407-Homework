@@ -103,6 +103,7 @@ public class DateFragment extends Fragment {
                         .addToBackStack(null)
                         .commit();
 
+                eventList = ((DateActivity)getActivity()).getEventList();
                 adapter.notifyDataSetChanged();
             }
         });

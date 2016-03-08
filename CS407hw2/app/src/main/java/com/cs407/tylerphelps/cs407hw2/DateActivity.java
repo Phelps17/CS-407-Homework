@@ -84,8 +84,9 @@ public class DateActivity extends AppCompatActivity {
                 {
                     return;
                 }
-                Toast.makeText(context, "Added Events from Database", Toast.LENGTH_SHORT).show();
-                eventList.add(event.getName() + " @ " + event.getLocation());
+                if (event.getDate().equals(this.dateString)) {
+                    eventList.add(event.getName() + " @ " + event.getLocation());
+                }
             }
         }
     }
@@ -124,6 +125,7 @@ public class DateActivity extends AppCompatActivity {
         CalEvent newEvent = new CalEvent(rand.nextLong(), name, location, startTime, endTime, this.dateString, true);
 
         eventDao.insert(newEvent);
+        eventList.add(newEvent.getName() + " @ " + newEvent.getLocation());
 
         //Close and reopen database to ensure Guest object is saved
         closeReopenDatabase();
