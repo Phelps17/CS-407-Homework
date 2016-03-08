@@ -7,3 +7,4 @@ Homework folder for CS407.
 
 ## Demo Videos
 - Homework 1 Android Demo: https://youtu.be/ei6LvFM8-UY
+- Homework 2 Android Demo: https://youtu.be/DnIhfoRQg8c
